@@ -1,0 +1,36 @@
+import csv
+import json
+
+# Автор: Баранова Марина
+# Створення .csv файлу та запис даних у нього
+
+try:
+    # Створення та запис даних у .csv файл
+    with open("students_data.csv", mode="w", newline="", encoding="utf-8") as csv_file:
+        # Визначаємо заголовки
+        fieldnames = ["Прізвище", "Ім'я", "Курс", "Середній бал"]
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        
+        # Записуємо заголовки та рядки
+        writer.writeheader()
+        writer.writerow({"Прізвище": "Іваненко", "Ім'я": "Петро", "Курс": 2, "Середній бал": 4.5})
+        writer.writerow({"Прізвище": "Сидоренко", "Ім'я": "Анна", "Курс": 1, "Середній бал": 4.8})
+        writer.writerow({"Прізвище": "Коваль", "Ім'я": "Олег", "Курс": 3, "Середній бал": 4.2})
+    
+    print("Файл students_data.csv успішно створено.")
+except IOError as e:
+    print(f"Помилка під час роботи з файлом .csv: {e}")
+
+# Переписування даних із .csv у .json файл
+try:
+    # Читання даних із .csv
+    with open("students_data.csv", mode="r", encoding="utf-8") as csv_file:
+        reader = csv.DictReader(csv_file)
+        data = [row for row in reader]
+
+    # Запис даних у .json файл
+    with open("students_data.json", mode="w", encoding="utf-8") as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=4)
+    print("Дані з .csv файлу успішно переписані в students_data.json.")
+except (IOError, json.JSONDecodeError) as e:
+    print(f"Помилка під час роботи з файлами: {e}")
