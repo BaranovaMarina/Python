@@ -1,0 +1,48 @@
+# Автор: Баранова Марина
+# Словник для зберігання інформації про успішність студентів групи
+group_data = {
+    "group_number": "123-А",  # Номер групи
+    "students": [  # Список студентів групи
+        {
+            "full_name": "Іванов Іван Іванович",  # Прізвище, ім'я, по батькові
+            "course": 2,  # Курс
+            "subjects": {  # Словник предметів і оцінок
+                "Математика": [4, 5, 3],
+                "Програмування": [5, 5, 5],
+                "Фізика": [4, 4, 4]
+            },
+            "average_grade": 4.4  # Середній бал (можна додати для аналізу)
+        }
+    ]
+}
+
+# Функція для додавання нового студента у словник
+def add_student(group_dict, full_name, course, subjects):
+    """
+    Додає нового студента в словник групи.
+    :param group_dict: Словник групи
+    :param full_name: ПІБ студента
+    :param course: Курс навчання
+    :param subjects: Словник предметів та оцінок
+    """
+    new_student = {
+        "full_name": full_name,
+        "course": course,
+        "subjects": subjects,
+        "average_grade": sum([sum(marks) for marks in subjects.values()]) / 
+                         sum([len(marks) for marks in subjects.values()])  # Розрахунок середнього бала
+    }
+    group_dict["students"].append(new_student)
+    print(f"Студента {full_name} успішно додано!")
+
+# Приклад використання функції
+new_subjects = {
+    "Математика": [5, 5, 4],
+    "Програмування": [5, 4, 4],
+    "Фізика": [4, 4, 5]
+}
+
+add_student(group_data, "Петров Петро Петрович", 2, new_subjects)
+
+# Виведення оновленого словника
+print(group_data)
